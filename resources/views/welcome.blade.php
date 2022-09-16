@@ -92,5 +92,30 @@
            
 
            L.control.layers(baseLayers).addTo(map);
+
+
+           </script>
+
+<script>
+    function getMarkerAll(){
+            const dataUrl = "{{ route('data.wilayah') }}";
+
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: dataUrl,
+                dataType : 'json',
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+    getMarkerAll();
     </script>
 @endpush

@@ -214,9 +214,14 @@ class WilayahController extends Controller
     }
 
     //untuk ajax
-    public function getData()
+    public function getData(Request $request)
     {
-        $wilayah =  Wilayah::all();
-        return response()->json($wilayah);
+        //keamanan ajax url
+        if($request->ajax()){
+            $wilayah =  Wilayah::all();
+            return response()->json($wilayah);
+        }
+
+        return abort(404);
     }
 }

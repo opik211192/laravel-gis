@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Laravolt\Indonesia\Seeds\CitiesSeeder;
 use Laravolt\Indonesia\Seeds\VillagesSeeder;
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ZoneSeeder::class);
         $this->call(BandSeeder::class);
         $this->call(UtmZoneSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

@@ -24,7 +24,7 @@ class CreateWilayahsTable extends Migration
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('district_id');
             $table->unsignedBigInteger('village_id');            
-            $table->string('kterangan');
+            $table->string('uraian_lokasi');
             $table->string('x');
             $table->string('y');
             $table->string('latitude');

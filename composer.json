@@ -8,11 +8,13 @@
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "3.3.3",
-        "laravolt/indonesia": "^0.32.0"
+        "laravolt/indonesia": "^0.32.0",
+        "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -32,7 +34,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/helpers/format-tanggal.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [

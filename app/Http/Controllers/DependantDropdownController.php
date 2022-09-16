@@ -17,7 +17,7 @@ class DependantDropdownController extends Controller
     }
 
     public function districts(Request $request)
-    {
+    { 
         return \Indonesia::findCity($request->id, ['districts'])->districts->pluck('name', 'id');
     }
 

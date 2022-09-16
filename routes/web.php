@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DependantDropdownController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WilayahController;
+use App\Models\Wilayah;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +22,35 @@ use App\Http\Controllers\WilayahController;
 Route::get('/', function () {
     return view('welcome');
 });
+Auth::routes();
 
 Route::get('provinces', [DependantDropdownController::class, 'provinces'])->name('provinces');
 Route::get('cities', [DependantDropdownController::class, 'cities'])->name('cities');
 Route::get('districts', [DependantDropdownController::class, 'districts'])->name('districts');
 Route::get('villages', [DependantDropdownController::class, 'villages'])->name('villages');
 
-Route::get('wilayah', [WilayahController::class, 'index'])->name('wilayah.index');
-Route::post('wilayah', [WilayahController::class, 'store'])->name('wilayah.store');
 
-Auth::routes();
+//Route untuk wilayah
+Route::middleware('auth')->prefix('wilayah')->group(function(){
+    Route::get('', [WilayahController::class, 'index'])->name('wilayah.index');
+    Route::get('/create', [WilayahController::class, 'create'])->name('wilayah.create');
+    Route::post('', [WilayahController::class, 'store'])->name('wilayah.store');
+    Route::get('/{wilayah}/edit', [WilayahController::class, 'edit'])->name('wilayah.edit');
+    Route::put('/{wilayah}/edit', [WilayahController::class, 'update'])->name('wilayah.update');
+    Route::delete('/{wilayah}', [WilayahController::class, 'delete'])->name('wilayah.delete');
+    Route::get('/{wilayah}/detail', [WilayahController::class, 'show'])->name('wilayah.show');
+
+    Route::get('/data', [WilayahController::class, 'data'])->name('dataAll');
+});
+
+//Route Ambil data via ajax
+Route::get('data/wilayah', [WilayahController::class, 'getData'])->name('data.wilayah');
+Route::get('user/data', [UserController::class, 'index'])->name('user.data');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+
+//bikin dulu controller dashboard
 

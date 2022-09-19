@@ -89,18 +89,16 @@
            var overlays = {
              
            };
-           
+        
 
            L.control.layers(baseLayers).addTo(map);
+           var layerMarker = L.layerGroup().addTo(map);
 
-
-           </script>
+</script>
 
 <script>
     function getMarkerAll(){
-            const dataUrl = "{{ route('data.wilayah') }}";
-
-            
+            const dataUrl = "{{ route('data.wilayah') }}";            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -111,11 +109,52 @@
                 url: dataUrl,
                 dataType : 'json',
                 success: function(data){
-                    console.log(data);
+                    for (let i = 0; i < data.length; i++) {
+                        marker = L.marker([data[i].latitude, data[i].longitude])
+                                  .bindPopup(`
+                                  <table class="table-sm">
+                                    <tr>
+                                        <td style="width:100px"><strong>Kode BM</strong></td>
+                                        <td>:</td>
+                                        <td>${data[i].kode_bm}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pekerjaan</strong</td>
+                                        <td>:</td>
+                                        <td>${data[i].nama_pekerjaan}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Gambar</strong></td>
+                                        <td>:</td>
+                                        <td><img class="" style="width:50px" src="/upload/gambar/${data[i].gambar}" alt="gambar" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="" class="btn btn-xs btn-primary text-white">Detail</a></td>
+                                    </tr>
+                                </table`);
+                        layerMarker.addLayer(marker);                       
+                    }
                 }
             });
-        }
+        }   
 
-    getMarkerAll();
     </script>
+
+<script>
+    $(document).ready(function () {
+        $('#checkboxBM').change(function (e) { 
+            e.preventDefault();
+            if ($(this).prop('checked') ==  true) {
+                 getMarkerAll();
+            }else if ($(this).prop('checked') == false){
+                layerMarker.eachLayer(function(layer){
+                    layerMarker.removeLayer(layer);
+                })
+            }
+        });
+    });
+</script>
+
 @endpush

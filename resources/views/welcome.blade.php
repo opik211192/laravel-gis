@@ -25,10 +25,6 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
 @push('scripts')
     <script>
 
@@ -94,54 +90,51 @@
            L.control.layers(baseLayers).addTo(map);
            var layerMarker = L.layerGroup().addTo(map);
 
-</script>
-
-<script>
-    function getMarkerAll(){
-            const dataUrl = "{{ route('data.wilayah') }}";            
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: dataUrl,
-                dataType : 'json',
-                success: function(data){
-                    for (let i = 0; i < data.length; i++) {
-                        marker = L.marker([data[i].latitude, data[i].longitude])
-                                  .bindPopup(`
-                                  <table class="table-sm">
-                                    <tr>
-                                        <td style="width:100px"><strong>Kode BM</strong></td>
-                                        <td>:</td>
-                                        <td>${data[i].kode_bm}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Pekerjaan</strong</td>
-                                        <td>:</td>
-                                        <td>${data[i].nama_pekerjaan}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Gambar</strong></td>
-                                        <td>:</td>
-                                        <td><img class="" style="width:50px" src="/upload/gambar/${data[i].gambar}" alt="gambar" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="" class="btn btn-xs btn-primary text-white">Detail</a></td>
-                                    </tr>
-                                </table`);
-                        layerMarker.addLayer(marker);                       
+           
+           //function Getmarker
+           function getMarkerAll(){
+                const dataUrl = "{{ route('data.wilayah') }}";            
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                }
-            });
-        }   
-
-    </script>
-
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: dataUrl,
+                    dataType : 'json',
+                    success: function(datas){
+                        datas.forEach(data => {
+                            marker = L.marker([data.latitude, data.longitude])
+                                      .bindPopup(`
+                                        <table class="table-sm">
+                                            <tr>
+                                                <td style="width:100px"><strong>Kode BM</strong></td>
+                                                <td>:</td>
+                                                <td>${data.kode_bm}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Pekerjaan</strong</td>
+                                                <td>:</td>
+                                                <td>${data.nama_pekerjaan}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Gambar</strong></td>
+                                                <td>:</td>
+                                                <td><img class="" style="width:50px" src="/upload/gambar/${data.gambar}" alt="gambar" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td><a href="" class="btn btn-xs btn-primary text-white">Detail</a></td>
+                                            </tr>
+                                        </table`);
+                            layerMarker.addLayer(marker); 
+                        });
+                    }
+                });
+            }   
+</script>
 <script>
     $(document).ready(function () {
         $('#checkboxBM').change(function (e) { 

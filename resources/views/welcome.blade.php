@@ -3,32 +3,32 @@
 @section('title', 'BM Citanduy')
 
 @section('styles')
-    
-    <style>
-        #mapid {
-            /* position: relative; */
-            height: 550px;  /* or as desired */
-            width: 100%;  /* This means "100% of the width of its container", the .col-md-8 */
-        }   
 
-    </style>
+<style>
+    #mapid {
+        /* position: relative; */
+        height: 550px;
+        /* or as desired */
+        width: 100%;
+        /* This means "100% of the width of its container", the .col-md-8 */
+    }
+</style>
 @endsection
 
 @section('content_header')
 @stop
 
 @section('content')
+<div class="">
     <div class="">
-            <div class="">
-                <div id="mapid"></div>
-        </div>
+        <div id="mapid"></div>
     </div>
+</div>
 @stop
 
 @push('scripts')
-    <script>
-
-        //-------------------------Layer Map-----------------------------------------//
+<script>
+    //-------------------------Layer Map-----------------------------------------//
         var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                maxZoom: 18,
                id: 'mapbox.streets',
@@ -95,6 +95,7 @@
            function getMarkerAll(){
                 const dataUrl = "{{ route('data.wilayah') }}";            
                 $.ajaxSetup({
+                    cache:false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
@@ -102,9 +103,14 @@
                 $.ajax({
                     type: 'GET',
                     url: dataUrl,
+                    
                     dataType : 'json',
                     success: function(datas){
                         datas.forEach(data => {
+                            
+                            var url = '{{ route("welcome.detail", ":id") }}';
+                            url = url.replace(':id', data.id);
+                            
                             marker = L.marker([data.latitude, data.longitude])
                                       .bindPopup(`
                                         <table class="table-sm">
@@ -124,16 +130,16 @@
                                                 <td><img class="" style="width:50px" src="/upload/gambar/${data.gambar}" alt="gambar" /></td>
                                             </tr>
                                             <tr>
+                                                <td><button onclick="myFunction()">Try it</button></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td><a href="" class="btn btn-xs btn-primary text-white">Detail</a></td>
+                                                <td><a href="${url}" class="btn btn-xs btn-primary text-white">Detail</a></td>
                                             </tr>
-                                        </table`);
+                                        </table`); 
                             layerMarker.addLayer(marker); 
                         });
                     }
                 });
-            }   
+            }
 </script>
 <script>
     $(document).ready(function () {

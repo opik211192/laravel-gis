@@ -14,11 +14,13 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                     <input type="checkbox" id="checkboxBM">
-                      <p>Tampilkan BM</p>
+                      <p>Data BM</p>
                     </a>
                   </li>
             </ul>
         </nav>
+
+        
         
         <nav class="pt-2">
             <ul class="nav nav-pills nav-sidebar flex-column {{ config('adminlte.classes_sidebar_nav', '') }}"

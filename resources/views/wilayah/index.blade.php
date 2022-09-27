@@ -12,6 +12,7 @@
         </div>
     @endif            
     <div class="row">
+
         <div class="col">
             <div class="card">
                 <div class="card-header">Data Wilayah</div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DependantDropdownController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\WilayahController;
 use App\Models\Wilayah;
 
@@ -19,9 +20,13 @@ use App\Models\Wilayah;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+Route::get('/{wilayah}/detail', [WelcomeController::class, 'detail'])->name('welcome.detail');
+
 Auth::routes();
 
 Route::get('provinces', [DependantDropdownController::class, 'provinces'])->name('provinces');

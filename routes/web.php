@@ -59,3 +59,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 
 //bikin dulu controller dashboard
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -8,53 +8,23 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
     <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @yield('styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    
-    <!-- leaflet untuk utm -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.3/proj4.js"></script>
-    <script src="{{ asset('js/L.LatLng.UTM.js') }}"></script>
-    
-    <script src="{{ asset('js/app.js') }}"></script>
-    @yield('coba')
-    
-
-    <style>
-        .navbar-custom {
-            background-color: #47648b;
-        }
-
-        .navbar-custom .navbar-brand,
-        .navbar-custom .navbar-text {
-            color: white;
-        }
-
-        .nav-link{
-            color: white;
-        }
-
-        .nav-link:hover{
-            color: white;
-        }
-        
-    </style>
-
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-custom shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/image/logo_pupr.png') }}" alt="logo_pupr" style="width: 30px; height:30px;">
-                    BM Citanduy
+                    {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -83,23 +53,10 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a href="/" class="nav-link">Home</a>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a href="{{ route('wilayah.index') }}" class="nav-link">Data BM</a>
-                            </li>
-
-                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -116,12 +73,11 @@
                     </ul>
                 </div>
             </div>
-        </nav> 
+        </nav>
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
-@stack('scripts')
 </body>
 </html>
